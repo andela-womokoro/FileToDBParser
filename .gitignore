@@ -8,3 +8,4 @@ nbactions.xml
 .DS_Store
 .jacocoverage
 target/
+/nbproject/
