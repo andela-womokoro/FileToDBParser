@@ -5,24 +5,23 @@ package checkpoint.andela.log;
  * @author Wilson Omokoro
  */
 public class LogWriter implements Runnable {
+    
+    public static String logFile = "";
+    
     @Override
     public void run() {
         
     }
-    
-    public void start() {
-        
-    }
    
-    public static void writeToLog(){
-        
+    public static boolean writeToLog(){
+        return true;
     }
     
-    public void readFromLog() {
-        
+    public boolean readFromLog() {
+        return true;
     }
     
-    public void writeToFile(){
-        
+    public boolean writeToFile(String fileName){
+        return true;
     }
 }
