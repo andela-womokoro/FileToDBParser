@@ -60,6 +60,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>Tester.class</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             
             <plugin>
@@ -73,9 +78,6 @@
 						<include>**/*Test.java</include>
 						<include>**/*Tests.java</include>
 					</includes>
-                    <excludes>
-                        <exclude>Tester.class</exclude>
-                    </excludes>
 				</configuration>
 				<executions>
 					<execution>
