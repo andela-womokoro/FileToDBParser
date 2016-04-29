@@ -7,20 +7,23 @@ package checkpoint.andela.parser;
  * @author Wilson Omokoro
  */
 public class FileParser implements Runnable {
+    private String threadName;
+    
+    public FileParser(String name){
+       threadName = name;
+       System.out.println("Creating " +  threadName);
+    }
+    
     @Override
     public void run() {
         
     }
     
-    public void start() {
-        
+    public boolean readFromFile(String fileName) {
+        return true;
     }
     
-    public void readFromFile(String fileName) {
-        
-    }
-    
-    public void writeToBuffer() {
-        
+    public boolean writeToBuffer() {
+        return true;
     }
 }

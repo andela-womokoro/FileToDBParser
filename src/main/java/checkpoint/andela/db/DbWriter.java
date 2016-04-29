@@ -7,12 +7,23 @@ package checkpoint.andela.db;
  * @author Wilson Omokoro
  */
 public class DbWriter implements Runnable {
+    private String threadName;
+    
+    public DbWriter(String name){
+       threadName = name;
+       System.out.println("Creating " +  threadName);
+    }
+    
     @Override
     public void run() {
         
     }
     
-    public void start() {
-        
+    public boolean readFromBuffer() {
+        return true;
+    }
+    
+    public boolean writeToDb() {
+        return true;
     }
 }

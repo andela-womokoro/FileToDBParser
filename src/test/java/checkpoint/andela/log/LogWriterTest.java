@@ -14,7 +14,7 @@ public class LogWriterTest {
     
     @Before
     public void setUp() {
-        instance = new LogWriter();
+        instance = new LogWriter("LogWriterTestThread");
     }
     
     @After
@@ -28,7 +28,8 @@ public class LogWriterTest {
     @Test
     public void testRun() {
         System.out.println("run");
-        instance.start();
+        Thread testThread = new Thread(instance);
+        testThread.start();
     }
 
     /**
