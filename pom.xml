@@ -97,5 +97,13 @@
 				<version>3.1.0</version>
 			</plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>Tester.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 </project>
