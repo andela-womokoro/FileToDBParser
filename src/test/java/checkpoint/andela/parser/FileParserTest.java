@@ -38,7 +38,7 @@ public class FileParserTest {
     @Test
     public void testReadFromFile() {
         System.out.println("readFromFile");
-        assertTrue(instance.readFromFile("someFile.txt"));
+        assertTrue(instance.readFromFile());
     }
 
     /**
@@ -47,6 +47,10 @@ public class FileParserTest {
     @Test
     public void testWriteToBuffer() {
         System.out.println("writeToBuffer");
-        assertTrue(instance.writeToBuffer());
+        boolean readFromFile = instance.readFromFile();
+        
+        if(readFromFile) {
+            assertTrue(instance.writeToBuffer());
+        }
     }
 }

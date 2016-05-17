@@ -54,6 +54,20 @@ public class DbWriter implements Runnable {
     }
     
     public boolean readFromBuffer() {
+        //read the data from the buffer
+        /*
+        while (bytesWritten != -1) {
+            buf.flip();
+
+            while(buf.hasRemaining()) {
+                System.out.print((char) buf.get()); // read 1 byte at a time
+            }
+
+            buf.clear(); //make buffer ready for writing
+            bytesWritten = inChannel.read(buf);
+        }
+        */
+        
         return true;
     }
     
