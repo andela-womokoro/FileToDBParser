@@ -1,14 +1,17 @@
 package checkpoint.andela.db;
 
 //import checkpoint.andela.log.LogWriter;
+import checkpoint.andela.parser.FileParser;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Wilson Omokoro
  */
 public class DbWriter implements Runnable {
-    private String threadName;
+    private final String threadName;
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
@@ -20,7 +23,9 @@ public class DbWriter implements Runnable {
     
     @Override
     public void run() {
-        try{
+        System.out.println(threadName +" accessing FileParser bytesWritten: "+ FileParser.bytesWritten);
+        
+        /*try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/reactiondb";
             String user = "root";
@@ -50,7 +55,7 @@ public class DbWriter implements Runnable {
             catch(SQLException sqle){
                System.out.println("SQLException, run method, DbWriter.java: "+ sqle); 
             }
-        }
+        }*/
     }
     
     public boolean readFromBuffer() {
@@ -63,7 +68,7 @@ public class DbWriter implements Runnable {
                 System.out.print((char) buf.get()); // read 1 byte at a time
             }
 
-            buf.clear(); //make buffer ready for writing
+            //buf.clear(); //make buffer ready for writing
             bytesWritten = inChannel.read(buf);
         }
         */

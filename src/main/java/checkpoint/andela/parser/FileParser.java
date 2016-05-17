@@ -12,11 +12,11 @@ import java.nio.channels.FileChannel;
  * @author Wilson Omokoro
  */
 public class FileParser implements Runnable {
-    private String threadName;
+    private final String threadName;
     private RandomAccessFile inputFile = null;
     private FileChannel inChannel = null;
-    private ByteBuffer buf = null;
-    private int bytesWritten;
+    public static ByteBuffer buf = null;
+    public static int bytesWritten;
     
     public FileParser(String name){
        threadName = name;
@@ -42,6 +42,8 @@ public class FileParser implements Runnable {
                 System.out.println("IOException, run method, FileParser.java, while closing inputFile: "+ ioe);
             }
         }
+        
+        //generate action log at this point...
     }
     
     public boolean readFromFile() {

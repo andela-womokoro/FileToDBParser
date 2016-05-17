@@ -7,7 +7,7 @@ package checkpoint.andela.log;
 public class LogWriter implements Runnable {
     
     public static String logFile = "";
-    private String threadName;
+    private final String threadName;
     
     public LogWriter(String name){
        threadName = name;
