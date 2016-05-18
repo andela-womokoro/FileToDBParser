@@ -13,8 +13,9 @@ import java.nio.channels.FileChannel;
  */
 public class FileParser implements Runnable {
     private final String threadName;
-    private RandomAccessFile inputFile = null;
-    private FileChannel inChannel = null;
+    private final String fileName = "temp.txt";
+    public static RandomAccessFile inputFile = null;
+    public static FileChannel inChannel = null;
     public static ByteBuffer buf = null;
     public static int bytesWritten;
     
@@ -50,27 +51,10 @@ public class FileParser implements Runnable {
         boolean fileWasRead = false;
         
         try {
-            System.out.println(threadName +" is reading input file (reactions.dat)...");
-            inputFile = new RandomAccessFile("reactions.dat", "r");
+            System.out.println(threadName +" is reading input file ("+fileName+")...");
+            inputFile = new RandomAccessFile(fileName, "r");
             
             fileWasRead = true;
-            /*
-            //write the file's data into the buffer.
-            int bytesRead = inChannel.read(buf); 
-            
-            //read the data from the buffer
-            while (bytesRead != -1) {
-                System.out.println("Read " + bytesRead);
-                buf.flip();
-
-                while(buf.hasRemaining()) {
-                    System.out.print((char) buf.get()); // read 1 byte at a time
-                }
-
-                buf.clear(); //make buffer ready for writing
-                bytesRead = inChannel.read(buf);
-            }
-            */
         }
         catch(IOException ioe) {
             System.out.println("IOException, readFromFile method, FileParser.java: "+ ioe);
@@ -88,8 +72,8 @@ public class FileParser implements Runnable {
             bytesWritten = inChannel.read(buf); //reads (i.e. writes) the file's content into the buffer.
             
             wroteToBuffer = true;
-            //buf.clear();
-        } catch (IOException ioe) {
+        } 
+        catch (IOException ioe) {
             System.out.println("IOException, writeToBuffer method, FileParser.java: "+ ioe);
         }
         

@@ -2,9 +2,8 @@ package checkpoint.andela.db;
 
 //import checkpoint.andela.log.LogWriter;
 import checkpoint.andela.parser.FileParser;
+import java.io.IOException;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,8 +22,28 @@ public class DbWriter implements Runnable {
     
     @Override
     public void run() {
-        System.out.println(threadName +" accessing FileParser bytesWritten: "+ FileParser.bytesWritten);
+        readFromBuffer();
         
+        
+    }
+    
+    public boolean readFromBuffer() {
+        boolean readFromBuffer = false;
+        System.out.println(threadName +" is reading "+FileParser.bytesWritten+" bytes of data from the buffer...");
+        
+        FileParser.buf.flip();
+
+        while(FileParser.buf.hasRemaining()) {
+            System.out.print((char)FileParser.buf.get()); // read 1 byte at a time from buffer
+        }
+        
+        readFromBuffer = true;
+        FileParser.buf.clear();
+            
+        return readFromBuffer;
+    }
+    
+    public boolean writeToDb() {
         /*try{
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/reactiondb";
@@ -56,28 +75,6 @@ public class DbWriter implements Runnable {
                System.out.println("SQLException, run method, DbWriter.java: "+ sqle); 
             }
         }*/
-    }
-    
-    public boolean readFromBuffer() {
-        //read the data from the buffer
-        /*
-        while (bytesWritten != -1) {
-            buf.flip();
-
-            while(buf.hasRemaining()) {
-                System.out.print((char) buf.get()); // read 1 byte at a time
-            }
-
-            //buf.clear(); //make buffer ready for writing
-            bytesWritten = inChannel.read(buf);
-        }
-        */
-        
-        return true;
-    }
-    
-    public boolean writeToDb() {
-        
         
         return true;
     }
