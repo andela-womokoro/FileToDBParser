@@ -32,9 +32,30 @@ public class DbWriter implements Runnable {
         System.out.println(threadName +" is reading "+FileParser.bytesWritten+" bytes of data from the buffer...");
         
         FileParser.buf.flip();
-
+        
+        String line = "";
+        boolean appendToLine = true;
+        int linesCount = 1;
+        
         while(FileParser.buf.hasRemaining()) {
-            System.out.print((char)FileParser.buf.get()); // read 1 byte at a time from buffer
+            char character = (char)FileParser.buf.get(); // read 1 byte at a time from buffer
+                
+            if(character == '#'){
+                appendToLine = false;
+            }
+            
+            if(appendToLine){
+                line = line + character;
+            }
+            
+            if(character == '\n'){
+                if(! line.equals("")){
+                    System.out.print("line "+linesCount+">>>"+line);
+                }
+                line = "";
+                appendToLine = true;
+                linesCount++;
+            }
         }
         
         readFromBuffer = true;

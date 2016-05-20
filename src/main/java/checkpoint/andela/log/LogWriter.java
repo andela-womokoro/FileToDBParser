@@ -19,7 +19,9 @@ public class LogWriter implements Runnable {
         System.out.println("Running " +  threadName);
     }
    
-    public static boolean writeToLog(){
+    public static boolean writeToLog(String thread, String action) {
+        //generate timestamp here
+        
         return true;
     }
     
