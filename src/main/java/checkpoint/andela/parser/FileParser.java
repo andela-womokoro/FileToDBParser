@@ -13,7 +13,7 @@ import java.nio.channels.FileChannel;
  */
 public class FileParser implements Runnable {
     private final String threadName;
-    private final String fileName = "temp.txt";
+    private final String fileName = "reactions.dat";
     public static RandomAccessFile inputFile = null;
     public static FileChannel inChannel = null;
     public static ByteBuffer buf = null;

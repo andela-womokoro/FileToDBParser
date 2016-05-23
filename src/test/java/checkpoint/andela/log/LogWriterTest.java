@@ -38,7 +38,7 @@ public class LogWriterTest {
     @Test
     public void testWriteToLog() {
         System.out.println("writeToLog");
-        assertTrue(instance.writeToLog());
+        assertTrue(instance.writeToLog("Some_thread", "did something"));
     }
 
     /**
