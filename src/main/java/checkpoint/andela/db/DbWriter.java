@@ -27,10 +27,6 @@ public class DbWriter implements Runnable {
 
     @Override
     public void run() {
-        //test
-        String[] fields = {"field1", "field2", "field3"};
-        System.out.println(Arrays.toString(fields).replace('[', ' ').replace(']', ' ').trim());
-        
         //prepare databases resources
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -39,9 +35,7 @@ public class DbWriter implements Runnable {
             String password = "root";
             conn = DriverManager.getConnection(url, user, password);
             s = conn.createStatement();
-            
-            String sql = "INSERT INTO reactions(field1, field2) VALUES(?, ?)";
-            
+            String sql = "INSERT INTO reactions("+SQL.getInsertAttributes()+") VALUES("+SQL.getInsertPlaceHolders()+")";
             ps = conn.prepareStatement(sql);
 
             readFromBuffer();
