@@ -3,6 +3,7 @@ package checkpoint.andela.db;
 //import checkpoint.andela.log.LogWriter;
 import checkpoint.andela.parser.FileParser;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,10 @@ public class DbWriter implements Runnable {
 
     @Override
     public void run() {
+        //test
+        String[] fields = {"field1", "field2", "field3"};
+        System.out.println(Arrays.toString(fields).replace('[', ' ').replace(']', ' ').trim());
+        
         //prepare databases resources
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -34,7 +39,9 @@ public class DbWriter implements Runnable {
             String password = "root";
             conn = DriverManager.getConnection(url, user, password);
             s = conn.createStatement();
+            
             String sql = "INSERT INTO reactions(field1, field2) VALUES(?, ?)";
+            
             ps = conn.prepareStatement(sql);
 
             readFromBuffer();
@@ -55,7 +62,7 @@ public class DbWriter implements Runnable {
                 if (conn != null) {
                     conn.close();
                 }
-                System.out.println(threadName+" closed all database resources.");
+                System.out.println(threadName + " closed all database resources.");
             } catch (SQLException sqle) {
                 System.out.println("SQLException, run method, DbWriter.java: " + sqle);
             }
@@ -92,7 +99,7 @@ public class DbWriter implements Runnable {
                     if (line.contains("//")) { //if line contains end of record marker
                         writeToDb(++recordCount); //write record's (i.e. hashmap object's) content to db
                         record = null;
-                    } else if(line.contains(" - ")) {
+                    } else if (line.contains(" - ")) {
                         keyValuePair = extractKeyAndValue(line, linesCount);
                         if (record == null) {
                             record = new HashMap<>();
@@ -119,7 +126,7 @@ public class DbWriter implements Runnable {
     }
 
     public String[] extractKeyAndValue(String line, int lineNo) {
-        try{
+        try {
             String separator = " - ";
             int separatorIndex = line.indexOf(separator);
             String key = line.substring(0, separatorIndex);
@@ -127,20 +134,20 @@ public class DbWriter implements Runnable {
             value = value.replace('\n', ' ');
             String[] keyAndValue = {key.trim(), value.trim()};
             return keyAndValue;
-        }
-        catch(Exception e){
-            System.out.println("Exception, extractKeyAndValue method, DbWriter.java: "+ e);
-            System.out.println("Line "+lineNo+" in the file is causing the problem:>>>"+line);
+        } catch (Exception e) {
+            System.out.println("Exception, extractKeyAndValue method, DbWriter.java: " + e);
+            System.out.println("Line " + lineNo + " in the file is causing the problem:>>>" + line);
             return new String[0];
         }
     }
 
     public boolean writeToDb(int recordCount) {
-        System.out.println(threadName + " is writing record "+recordCount+" to database...");
+        System.out.println(threadName + " is writing record " + recordCount + " to database...");
 
         /*for(Map.Entry<String, String> fileRec : record.entrySet()){
             System.out.println(fileRec.getKey() +" :: "+ fileRec.getValue());
         }*/
+        
         /*try{
             
             ps.setString(1, "");
