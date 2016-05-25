@@ -9,3 +9,4 @@ nbactions.xml
 .jacocoverage
 target/
 /nbproject/
+temp.txt
