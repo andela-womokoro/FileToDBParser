@@ -7,13 +7,21 @@ import java.util.HashMap;
  * @author Wilson Omokoro
  */
 public class SQL {
-    private static final String[] insertAttributes = {"UNIQUE-ID", "TYPES", "COMMON-NAME", "ATOM-MAPPINGS", "CANNOT-BALANCE?", "CITATIONS", "COMMENT", "COMMENT-INTERNAL", "CREDITS", "DATA-SOURCE", "DBLINKS", "DELTAG0", "DOCUMENTATION", "EC-NUMBER", "ENZYMATIC-REACTION", "ENZYMES-NOT-USED",  "EQUILIBRIUM-CONSTANT", "HIDE-SLOT?", "IN-PATHWAY", "INSTANCE-NAME-TEMPLATE", "LEFT", "MEMBER-SORT-FN", "ORPHAN?", "PATHOLOGIC-NAME-MATCHER-EVIDENCE", "PATHOLOGIC-PWY-EVIDENCE", "PHYSIOLOGICALLY-RELEVANT?", "PREDECESSORS", "PRIMARIES", "REACTION-DIRECTION", "REACTION-LIST", "REGULATED-BY", "REQUIREMENTS", "RIGHT", "RXN-LOCATIONS", "SIGNAL", "SPECIES", "SPONTANEOUS?", "STD-REDUCTION-POTENTIAL", "SYNONYMS", "SYSTEMATIC-NAME", "TEMPLATE-FILE"};
+    protected static final String[] insertAttributes = {"UNIQUE-ID", "TYPES", "COMMON-NAME", "ATOM-MAPPINGS", "CANNOT-BALANCE?", "CITATIONS", "COMMENT", "COMMENT-INTERNAL", "CREDITS", "DATA-SOURCE", "DBLINKS", "DELTAG0", "DOCUMENTATION", "EC-NUMBER", "ENZYMATIC-REACTION", "ENZYMES-NOT-USED",  "EQUILIBRIUM-CONSTANT", "HIDE-SLOT?", "IN-PATHWAY", "INSTANCE-NAME-TEMPLATE", "LEFT", "MEMBER-SORT-FN", "ORPHAN?", "PATHOLOGIC-NAME-MATCHER-EVIDENCE", "PATHOLOGIC-PWY-EVIDENCE", "PHYSIOLOGICALLY-RELEVANT?", "PREDECESSORS", "PRIMARIES", "REACTION-DIRECTION", "REACTION-LIST", "REGULATED-BY", "REQUIREMENTS", "RIGHT", "RXN-LOCATIONS", "SIGNAL", "SPECIES", "SPONTANEOUS?", "STD-REDUCTION-POTENTIAL", "SYNONYMS", "SYSTEMATIC-NAME", "TEMPLATE-FILE"};
     
     public static String getInsertAttributes() {
-        return Arrays.toString(insertAttributes).replace('[', ' ').replace(']', ' ').trim();
+        String attributes = "";
+        
+        for(int i = 0; i < insertAttributes.length; i++) {
+            attributes = attributes +"`"+ insertAttributes[i]+"`"; //NOTE: the backticks are very important for fields containing -
+            if(i < (insertAttributes.length - 1)) {
+               attributes = attributes + ", "; 
+            }
+        }
+        return attributes;
     }
     
-    public static String getInsertPlaceHolders() {
+    public static String getInsertPlaceholders() {
         String placeholders = "";
         
         for(int i = 0; i < insertAttributes.length; i++) {
@@ -30,7 +38,7 @@ public class SQL {
             return record.get(key);
         }
         else {
-            return null;
+            return "";
         }
     }
 }

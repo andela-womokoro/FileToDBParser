@@ -3,9 +3,7 @@ package checkpoint.andela.db;
 //import checkpoint.andela.log.LogWriter;
 import checkpoint.andela.parser.FileParser;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -15,9 +13,8 @@ public class DbWriter implements Runnable {
 
     private final String threadName;
     Connection conn;
-    PreparedStatement ps;
     Statement s;
-    ResultSet rs;
+    PreparedStatement ps;
     private HashMap<String, String> record;
 
     public DbWriter(String name) {
@@ -35,18 +32,14 @@ public class DbWriter implements Runnable {
             String password = "root";
             conn = DriverManager.getConnection(url, user, password);
             s = conn.createStatement();
-            String sql = "INSERT INTO reactions("+SQL.getInsertAttributes()+") VALUES("+SQL.getInsertPlaceHolders()+")";
+            String sql = "INSERT INTO reactions("+SQL.getInsertAttributes()+") VALUES("+SQL.getInsertPlaceholders()+")";
             ps = conn.prepareStatement(sql);
-
+            
             readFromBuffer();
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Exception, run method, DbWriter.java: " + e);
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
-                    System.out.println("Closed rs.");
-                }
                 if (s != null) {
                     s.close();
                 }
@@ -136,21 +129,25 @@ public class DbWriter implements Runnable {
     }
 
     public boolean writeToDb(int recordCount) {
-        System.out.println(threadName + " is writing record " + recordCount + " to database...");
-
-        /*for(Map.Entry<String, String> fileRec : record.entrySet()){
-            System.out.println(fileRec.getKey() +" :: "+ fileRec.getValue());
-        }*/
+        System.out.print(threadName + " is writing record " + recordCount + " to database... ");
+        boolean recordWrittenToDb = false;
         
-        /*try{
+        try{
+            for(int i = 0; i < SQL.insertAttributes.length; i++) {
+                ps.setString((i+1), SQL.fetchValue(record, SQL.insertAttributes[i]));
+            }
             
-            ps.setString(1, "");
-            ps.setString(2, "");
-            //int rows = ps.executeUpdate();
+            int rows = ps.executeUpdate();
+            
+            if(rows == 1) {
+                recordWrittenToDb = true;
+                System.out.print("done.\n");
+            }
         }
         catch(Exception e){
             System.out.println("Exception, writeToDb method, DbWriter.java: "+ e);
-        }*/
-        return true;
+        }
+        
+        return recordWrittenToDb;
     }
 }

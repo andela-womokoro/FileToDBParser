@@ -24,9 +24,9 @@ public class SQLTest {
      * Test of getInsertPlaceHolders method, of class SQL.
      */
     @Test
-    public void testGetInsertPlaceHolders() {
+    public void testGetInsertPlaceholders() {
         System.out.println("getInsertPlaceHolders");
-        String result = SQL.getInsertPlaceHolders();
+        String result = SQL.getInsertPlaceholders();
         assertTrue(result != null);
         assertTrue(result.length() > 0);
     }
